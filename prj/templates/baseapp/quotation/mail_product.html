@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Added to Quotation</title>
+</head>
+<body>
+    <h2>Product Added to Quotation</h2>
+    <p>Hello {{ user.username }},</p>
+    
+    <p>We've added the following product to your quotation:</p>
+    
+    <img src="{{ image }}" alt="{{ product_name }}" style="max-width: 200px;">
+    
+    <h3>{{ product_name }}</h3>
+    <p>Title: {{ product_title }}</p>
+    <p>Price: Rs{{ price }}</p>
+    <p>Product Rating: {{ rating }}</p>
+    
+    <p>Thank you for using our service!</p>
+    
+    <p>Sincerely,<br>
+    Your Team</p>
+</body>
+</html>

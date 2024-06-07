@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Table</title>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <style>
+        .header-box {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .action-box {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        .action-box .btn {
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+   <!--  <div class="shop__product--wrapper">
+        <div class="tab_content">
+            <div id="product_grid" class="tab_pane active show">
+                <div class="product__section--inner product__grid--inner"> 
+                    <table id="product-table" class="display">
+                        
+                        <tbody>
+                            {% for product in each_products %}
+                            <tr>
+                                <td >
+
+                                    <img class="product__items--img product__primary--img" src="{{ product.image.url }}" alt="product-img">
+                                    
+                                {{ product.name }}
+                                Rs. {{ product.new_price }}
+                                Rs. {% if product.old_price %}{{ product.old_price }}{% else %}N/A{% endif %}
+                                
+                                    <div class="action-box">
+                                        <a href="{% url 'product_detail' product.id %}" class="btn btn-primary">View</a>
+                                        <form method="post" action="{% url 'add_to_wishlist' product.id %}">
+                                            {% csrf_token %}
+                                            <button type="submit" class="btn btn-secondary">Wishlist</button>
+                                        </form>
+                                        <form method="post" action="{% url 'add_to_cart' product.id %}">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="quantity" value="1">
+                                            <button type="submit" class="btn btn-success">Add to Cart</button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div> -->
+
+    <div class="shop__product--wrapper">
+    <div class="tab_content">
+        <div id="product_grid" class="tab_pane active show">
+            <div class="product__section--inner product__grid--inner"> 
+                <table id="product-table" class="display">
+                    <tbody>
+                        {% for product in each_products %}
+                            {% if forloop.counter0|divisibleby:4 %}<tr>{% endif %}
+                            <td>
+                                <img class="product__items--img product__primary--img" src="{{ product.image.url }}" alt="product-img">
+                                
+                                <p>{{ product.name }}</p>
+                                <p>Rs. {{ product.new_price }}</p>
+                                <p>Rs. {% if product.old_price %}{{ product.old_price }}{% else %}N/A{% endif %}</p>
+                                <div class="action-box">
+                                    <a href="{% url 'product_detail' product.id %}" class="btn btn-primary">View</a>
+                                    <form method="post" action="{% url 'add_to_wishlist' product.id %}">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-secondary">Wishlist</button>
+                                    </form>
+                                    <form method="post" action="{% url 'add_to_cart' product.id %}">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="quantity" value="1">
+                                        <button type="submit" class="btn btn-success">Add to Cart</button>
+                                    </form>
+                                </div>
+                            </td>
+                            {% if forloop.last or forloop.counter0|divisibleby:3 %}</tr>{% endif %}
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    <script>
+        $(document).ready(function() {
+            $('#product-table').DataTable({
+                columns: [
+                    { searchable: true }
+                    
+                    ],
+                "pagingType": "full_numbers",
+                "lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
+                "ordering": true,
+                "searching": true,
+                "info": true,
+                "autoWidth": false,
+                "responsive": true
+            });
+        });
+    </script>
+</body>
+</html>

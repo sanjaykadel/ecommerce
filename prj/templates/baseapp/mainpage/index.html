@@ -1,0 +1,329 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block content %}
+    <main class="main__content_wrapper">
+        <!-- Start slider section -->
+       <section class="hero__slider--section">
+            <div class="col-xl-12 col-lg-12">
+                <!-- Start slider section -->
+                <div class="hero__slider--inner hero__slider--activation swiper">
+                    <div class="hero__slider--wrapper swiper-wrapper">
+                        {% for banner in banners %}
+                        <div class="swiper-slide">
+                            <div class="hero__slider--items hero__slider--bg slider1">
+                                <div class="hero__slider--items__inner">
+                                    <div class="row row-cols-1">
+                                        <div class="col">
+                                            <div class="slider__content" style="background-image: url('{{ banner.banner.url }}');    
+                                                    background-repeat: no-repeat;
+                                                    background-attachment: scroll;
+                                                    background-position: center center;
+                                                    background-size: cover;">
+                                                <div class="slider__content--inner">
+                                                    <p class="slider__content--desc desc1 mb-15">{{ banner.description }}</p>
+                                                    <h2 class="slider__content--maintitle h1">{{ banner.title }}</h2>
+                                                    <!-- <p class="slider__content--desc text-grey mb-35 d-sm-2-none">{{ banner.additional_info }}</p> -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <!-- <div class="swiper__nav--btn swiper-button-next"></div>
+                    <div class="swiper__nav--btn swiper-button-prev"></div> -->
+                </div>
+                <!-- End slider section -->
+            </div>
+        </section>
+
+
+
+        <!-- End slider section -->
+
+        <!-- Start banner section -->
+       <section class="banner__section section--padding color-scheme-2 pt-20">
+            <div class="container">
+                <div class="row mb--n28">
+                    <div class="col-lg-6 col-md-6 banner2__col--6 mb-28">
+                        <div class="banner__items position__relative">
+                            <a class="banner__items--thumbnail " href="{% url 'shop'%}">
+                                <img class="banner__items--thumbnail__img"
+                                    src="{% static 'baseapp/img/furniture/bed2.jpg' %}" alt="banner-img" style=" width: 100%;">
+                                <div class="banner__content--style2">
+                                    <h3 class="banner__content--style2__subtitle">Get Discount Up to 20%</h3>
+                                    <h2 class="banner__content--style2--title">Minimalist White <br> Bed Set </h2>
+                                    <span class="banner__content--style2__link primary__btn style2">Buy Now</span>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 banner2__col--6r mb-28">
+                        <div class="banner__items position__relative mb-25">
+                            <a class="banner__items--thumbnail " href="{% url 'shop'%}"><img
+                                    class="banner__items--thumbnail__img banner__img--height"
+                                    src="{% static 'baseapp/img/furniture/kitchen3.jpg' %}" alt="banner-img"
+                                    style="height: 285px; width: 100%;">
+                                <div class="banner__content--style2">
+                                    <h3 class="banner__content--style2__subtitle d-md-none">Get Discount Up to 20%</h3>
+                                    <h2 class="banner__content--style2--title text-grey">Minimalist Modular <br> Kitchen
+                                        Combo</h2>
+                                    <span class="banner__content--style2__link primary__btn style2">Buy Now</span>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="banner__items position__relative">
+                            <a class="banner__items--thumbnail " href="{% url 'shop'%}"><img
+                                    class="banner__items--thumbnail__img banner__img--height"
+                                    src="{% static 'baseapp/img/furniture/sofa.jpg' %}" alt="banner-img"
+                                    style="height: 285px; width: 100%;">
+                                <div class="banner__content--style2">
+                                    <h3 class="banner__content--style2__subtitle text-ofwhite d-md-none">Get Discount Up
+                                        to 20%</h3>
+                                    <h2 class="banner__content--style2--title text-white">White Minimalist <br>
+                                        Combo Sofa </h2>
+                                    <span class="banner__content--style2__link primary__btn style2 text-white">Buy
+                                        Now</span>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- End banner section -->
+
+        <!-- Start banner section -->
+        <section class="banner__section section--padding color-scheme-2 pt-0">
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+                        <div class="banner__section--inner d-flex align-items-center">
+                            <div class="banner__discount--content">
+                                <h3 class="banner__discount--content__subtitle">Get Discount Up to 40%</h3>
+                                <h2 class="banner__discount--content__title">Top Trending
+                                    Furniture Items</h2>
+                                <p class="banner__discount--content__desc">From minimalist designs to luxurious
+                                    statement pieces, we offer furniture that embodies both style and functionality.</p>
+                                <a class=" primary__btn btn__style2" href="{% url 'shop'%}" rel="nofollow">Discover More</a>
+                            </div>
+     
+                           <div class="banner2__right--sidebar position__relative d-flex">
+                            {% for product in each_products|slice:":3" %}
+                                {% if forloop.counter == 1 %}
+                                    <div class="banner2__sidebar--items one position__relative">
+                                        <a class="banner__items--thumbnail" href="{% url 'shop' %}" rel="nofollow">
+                                            <img class="banner__items--thumbnail__img" src="{{ product.image.url }}" alt="banner-img">
+                                        </a>
+                                        <div class="product__badge style2">
+                                            <span class="product__badge--items style2 sale">{{ product.name }}</span>
+                                        </div>
+                                    </div>
+                                {% elif forloop.counter == 2 %}
+                                    <div class="banner2__sidebar--items two position__relative">
+                                        <a class="banner__items--thumbnail" href="{% url 'shop' %}" rel="nofollow">
+                                            <img class="banner__items--thumbnail__img" src="{{ product.image.url }}" alt="banner-img">
+                                        </a>
+                                    </div>
+                                {% elif forloop.counter == 3 %}
+                                    <div class="banner2__sidebar--items three position__relative">
+                                        <a class="banner__items--thumbnail" href="{% url 'shop' %}" rel="nofollow">
+                                            <img class="banner__items--thumbnail__img" src="{{ product.image.url }}" alt="banner-img">
+                                        </a>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- End banner section -->
+
+        <!-- Start product section -->
+        {% include 'products/toprated.html' %}
+        <!-- End product section -->
+
+        <!-- Start banner section -->
+        <section class="banner__section section--padding pt-0">
+            <div class="container-fluid">
+                <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-2 row-cols-1 mb--n28">
+                    <div class="col mb-28">
+                        <div class="banner__items">
+                            <a class="banner__items--thumbnail position__relative" href="{% url 'shop'%}"><img
+                                    class="banner__items--thumbnail__img" src="{% static 'baseapp/img/global_banner/banner9.png' %}"
+                                    alt="banner-img">
+                                <div class="banner__items--content__style2 right">
+                                    <h2 class="banner__items--content__style2--title">Single Stylish <br>
+                                        Mini Chair </h2>
+                                    <span class="banner__items--content__link primary__btn style2">Order Now</span>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col mb-28">
+                        <div class="banner__items">
+                            <a class="banner__items--thumbnail position__relative" href="{% url 'shop'%}"><img
+                                    class="banner__items--thumbnail__img" src="{% static 'baseapp/img/global_banner/banner11.png' %}"
+                                    alt="banner-img">
+                                <div class="banner__items--content__style2 right">
+                                    <h2 class="banner__items--content__style2--title">New Outdoor<br> Furniture</h2>
+                                    <span class="banner__items--content__link primary__btn style2">Order Now</span>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col mb-28">
+                        <div class="banner__items">
+                            <a class="banner__items--thumbnail position__relative" href="{% url 'shop'%}"><img
+                                    class="banner__items--thumbnail__img" src="{% static 'baseapp/img/global_banner/banner12.png' %}"
+                                    alt="banner-img">
+                                <div class="banner__items--content__style2 right">
+                                    <h2 class="banner__items--content__style2--title">New Modern <br> Stylish Furniture
+                                    </h2>
+                                    <span class="banner__items--content__link primary__btn style2">Order Now</span>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- End banner section -->
+
+        <!-- Start Choice us section -->
+        <section class="choiceus__section color-scheme-3 section--padding pt-0">
+            <div class="container">
+                <div class="row align-items-center">
+                    
+
+                    <div class="col-lg-7 col-md-7">
+                        <div class="choiceus__banner position__relative d-flex">
+                            <a class="choiceus__banner--thumbnail one display-block" href="#" rel="nofollow"><img
+                                    class="choiceus__banner--thumbnail__img display-block"
+                                    src="{% static 'baseapp/img/furniture/dining2.jpg' %}" alt="banner-img"></a>
+                            <a class="choiceus__banner--thumbnail two display-block" href="#" rel="nofollow"><img
+                                    class="choiceus__banner--thumbnail__img two display-block"
+                                    src="{% static 'baseapp/img/global_banner/banner15.png' %}" alt="banner-img"
+                                    style="height: 240px;"></a>
+                            <div class="bideo__play style3">
+                                <a class="bideo__play--icon style3 glightbox"
+                                    href=" {% static 'baseapp/img/video/global_trade_video.mp4' %}" data-gallery="video">
+                                    <svg id="play" xmlns="http://www.w3.org/2000/svg" width="46.302" height="46.302"
+                                        viewBox="0 0 46.302 46.302">
+                                        <g id="Group_193" data-name="Group 193" transform="translate(0 0)">
+                                            <path id="Path_116" data-name="Path 116"
+                                                d="M39.521,6.781a23.151,23.151,0,0,0-32.74,32.74,23.151,23.151,0,0,0,32.74-32.74ZM23.151,44.457A21.306,21.306,0,1,1,44.457,23.151,21.33,21.33,0,0,1,23.151,44.457Z"
+                                                fill="currentColor" />
+                                            <g id="Group_188" data-name="Group 188" transform="translate(15.588 11.19)">
+                                                <g id="Group_187" data-name="Group 187">
+                                                    <path id="Path_117" data-name="Path 117"
+                                                        d="M190.3,133.213l-13.256-8.964a3,3,0,0,0-4.674,2.482v17.929a2.994,2.994,0,0,0,4.674,2.481l13.256-8.964a3,3,0,0,0,0-4.963Zm-1.033,3.435-13.256,8.964a1.151,1.151,0,0,1-1.8-.953V126.73a1.134,1.134,0,0,1,.611-1.017,1.134,1.134,0,0,1,1.185.063l13.256,8.964a1.151,1.151,0,0,1,0,1.907Z"
+                                                        transform="translate(-172.366 -123.734)" fill="currentColor" />
+                                                </g>
+                                            </g>
+                                            <g id="Group_190" data-name="Group 190" transform="translate(28.593 5.401)">
+                                                <g id="Group_189" data-name="Group 189">
+                                                    <path id="Path_118" data-name="Path 118"
+                                                        d="M328.31,70.492a18.965,18.965,0,0,0-10.886-10.708.922.922,0,1,0-.653,1.725,17.117,17.117,0,0,1,9.825,9.664.922.922,0,1,0,1.714-.682Z"
+                                                        transform="translate(-316.174 -59.724)" fill="currentColor" />
+                                                </g>
+                                            </g>
+                                            <g id="Group_192" data-name="Group 192" transform="translate(22.228 4.243)">
+                                                <g id="Group_191" data-name="Group 191">
+                                                    <path id="Path_119" data-name="Path 119"
+                                                        d="M249.922,47.187a19.08,19.08,0,0,0-3.2-.27.922.922,0,0,0,0,1.845,17.245,17.245,0,0,1,2.889.243.922.922,0,1,0,.31-1.818Z"
+                                                        transform="translate(-245.801 -46.917)" fill="currentColor" />
+                                                </g>
+                                            </g>
+                                        </g>
+                                    </svg>
+                                    <span class="visually-hidden">Play</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-5 col-md-5">
+                        <div class="choiceus__content">
+                            <h2 class="choiceus__content--title">Why You Choice Us</h2>
+                            <p class="choiceus__content--desc">Choose Global Trade for unmatched quality, personalized
+                                service, and a diverse product range that meets your every requirement.</p>
+                            <div class="choiceus__info ">
+                                <div class="choiceus__info--step d-flex">
+                                    <div class="choiceus__info--list">
+                                        <img src="{% static 'baseapp/img/flaticon/achievement.png'%}" alt="">
+                                        <span class="choiceus__info--text">Quality Assurance</span>
+                                    </div>
+                                    <div class="choiceus__info--list">
+                                        <img src="baseapp/img/flaticon/customer-review.png" alt="">
+                                        <span class="choiceus__info--text">Exceptional Customer Experience</span>
+                                    </div>
+                                </div>
+                                <div class="choiceus__info--step d-flex">
+                                    <div class="choiceus__info--list">
+                                        <img src="{% static 'baseapp/img/flaticon/living-room.png' %}" alt="">
+                                        <span class="choiceus__info--text">Wide Range of Products</span>
+                                    </div>
+                                    <div class="choiceus__info--list">
+                                        <img src="{% static 'baseapp/img/flaticon/location.png' %}" alt="">
+                                        <span class="choiceus__info--text">Convenient Location</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- <a class="choiceus__info--btn primary__btn btn__style3" href="#">Read More</a> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- End Choice us section -->
+
+        <!-- Start Newsletter banner section -->
+        <section class="newsletter__banner--section section--padding pt-0">
+            <div class="container-fluid">
+                <div class="newsletter__banner--thumbnail position__relative">
+                    <img class="newsletter__banner--thumbnail__img display-block"
+                        src="{{banner1.banner1.url}}" alt="newsletter-banner">
+                    <div class="newsletter__content newsletter__subscribe">
+                        <h5 class="newsletter__content--subtitle text-white">Want to offer regularly ?</h5>
+                        <h2 class="newsletter__content--title text-white h3 mb-25">Subscribe Our Newsletter <br>
+                            for Get Daily Update</h2>
+                        <form class="newsletter__subscribe--form position__relative" action="#">
+                            <label>
+                                <input class="newsletter__subscribe--input" placeholder="Enter your email address"
+                                    type="email">
+                            </label>
+                            <button class="newsletter__subscribe--button primary__btn" type="submit">Subscribe
+                                <svg class="newsletter__subscribe--button__icon" xmlns="http://www.w3.org/2000/svg"
+                                    width="9.159" height="7.85" viewBox="0 0 9.159 7.85">
+                                    <path data-name="Icon material-send"
+                                        d="M3,12.35l9.154-3.925L3,4.5,3,7.553l6.542.872L3,9.3Z"
+                                        transform="translate(-3 -4.5)" fill="currentColor" />
+                                </svg>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- End Newsletter banner section -->
+
+        <!-- Start product section -->
+        {% include 'products/topproduct.html' %}
+        <!-- End product section -->
+
+
+        <!-- Start product section -->
+        {% include 'products/featureproduct.html' %}
+       
+        <!-- End product section -->
+
+    </main>
+
+   
+{% endblock %}

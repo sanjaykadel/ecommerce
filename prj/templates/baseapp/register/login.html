@@ -1,0 +1,105 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+
+{% block content %}
+    <main class="main__content_wrapper">
+
+        <!-- Start breadcrumb section -->
+        <section class="breadcrumb__section breadcrumb__bg">
+            <div class="container-fluid">
+                <div class="row row-cols-1">
+                    <div class="col">
+                        <div class="breadcrumb__content">
+                            <h1 class="breadcrumb__content--title text-white mb-10">Login  Page</h1>
+                            <ul class="breadcrumb__content--menu d-flex">
+                                <li class="breadcrumb__content--menu__items"><a class="text-white"
+                                        href="index.html">Home</a></li>
+                                <li class="breadcrumb__content--menu__items"><span class="text-white">Login Page</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- End breadcrumb section -->
+
+        <!-- Start login section  -->
+        <div class="login__section section--padding">
+            <div class="container">
+                <form  method="POST" action="#">{% csrf_token %}
+                    <div class="login__section--inner">
+                        <div class="row row-cols-md-2 row-cols-1">
+                            <div class="col">
+                                <div class="account__login">
+                                    <div class="account__login--header mb-25">
+                                        <h3 class="account__login--header__title mb-10">Login</h3>
+                                        <p class="account__login--header__desc">Login if you area a returning customer.
+                                        </p>
+                                    </div>
+                                    <div class="account__login--inner">
+                                        <label>
+                                           {{ form.email }}
+                                        </label>
+                                        <label>
+                                             {{ form.password}}
+                                        </label>
+                                        <div
+                                            class="account__login--remember__forgot mb-15 d-flex justify-content-between align-items-center">
+                                            <div class="account__login--remember position__relative">
+                                                <input class="checkout__checkbox--input" id="check1" type="checkbox">
+                                                <span class="checkout__checkbox--checkmark"></span>
+                                                <label class="checkout__checkbox--label login__remember--label"
+                                                    for="check1">
+                                                    Remember me</label>
+                                            </div>
+                                            <button class="account__login--forgot" type="submit">Forgot Your
+                                                Password?</button>
+                                        </div>
+                                        <button class="account__login--btn primary__btn" type="submit">Login</button>
+                                        <div class="account__login--divide">
+                                            <span class="account__login--divide__text">OR</span>
+                                        </div>
+                                        <div class="account__social d-flex justify-content-center mb-15">
+                                            <a class="account__social--link facebook" target="_blank"
+                                                href="https://www.facebook.com/info4globaltrade/">Facebook</a>
+                                            <a class="account__social--link google" target="_blank"
+                                                href="https://www.google.com/">Google</a>
+                                            <a class="account__social--link twitter" target="_blank"
+                                                href="https://twitter.com/">Twitter</a>
+                                        </div>
+                                        <p class="account__login--signup__text">Don't Have an Account? <a
+                                                href="{% url 'signup'%}">Sign up now</a></p>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="banner__items position__relative mb-25">
+                                    <a class="banner__items--thumbnail " href="#"><img
+                                            class="banner__items--thumbnail__img banner__img--height"
+                                            src="assets/img/furniture/dining2.jpg" alt="banner-img"
+                                            style="height: 501px; width: 600px; object-fit: cover;">
+                                        <div class="banner__content--style2">
+                                            <h3 class="banner__content--style2__subtitle d-md-none">Get Discount Up to
+                                                20%</h3>
+                                            <h2 class="banner__content--style2--title text-grey">Minimalist Modular <br>
+                                                Kitchen
+                                                Combo</h2>
+                                            <span class="banner__content--style2__link primary__btn style2">Buy
+                                                Now</span>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- End login section  -->
+
+    </main>
+
+  {% endblock %}

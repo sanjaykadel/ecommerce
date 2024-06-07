@@ -1,0 +1,100 @@
+<li class="header__account--items header__account--search-items d-md-none">
+    <a class="header__account--btn search__open--btn" href="javascript:void(0)" onclick="toggleSearchForm()">
+        <svg class="header__search--button__svg" xmlns="http://www.w3.org/2000/svg"
+            width="26.51" height="23.443" viewBox="0 0 512 512">
+            <path d="M221.09 64a157.09 157.09 0 10157.09 157.09A157.1 157.1 0 00221.09 64z"
+                fill="none" stroke="currentColor" stroke-miterlimit="10"
+                stroke-width="32" />
+            <path fill="none" stroke="currentColor" stroke-linecap="round"
+                stroke-miterlimit="10" stroke-width="32" d="M338.29 338.29L448 448" />
+        </svg>
+    </a>
+    <div class="header__search-form" id="searchForm">
+        <input type="text" id="searchInput" placeholder="Search products" oninput="searchProducts()" aria-label="Search products">
+        <div id="searchResults" class="search-results-dropdown"></div>
+    </div>
+</li>
+
+<script>
+function toggleSearchForm() {
+    var form = document.getElementById('searchForm');
+    form.style.display = (form.style.display === 'block') ? 'none' : 'block';
+}
+
+function searchProducts() {
+    var query = document.getElementById('searchInput').value;
+    if (query.length > 0) {
+        fetch(`/ajax/search-products/?query=${query}`)
+            .then(response => response.json())
+            .then(data => {
+                var resultsDropdown = document.getElementById('searchResults');
+                resultsDropdown.innerHTML = '';
+                data.forEach(product => {
+                    var item = document.createElement('div');
+                    item.className = 'search-result-item';
+                    item.tabIndex = 0;
+                    item.innerHTML = product.name;
+                    item.onclick = function() {
+                        window.location.href = `/product/${product.id}/`;
+                    };
+                    resultsDropdown.appendChild(item);
+                });
+            });
+    } else {
+        document.getElementById('searchResults').innerHTML = '';
+    }
+}
+</script>
+
+
+<style >
+	/* Search Form Styles */
+.header__search-form {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background-color: #fff;
+    padding: 1rem;
+    border: 1px solid #ddd;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000; /* Ensure the form appears above other elements */
+    border-radius: 4px;
+}
+
+.header__account--search-items {
+    position: relative;
+}
+
+.search-results-dropdown {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    max-height: 200px;
+    overflow-y: auto;
+    position: absolute;
+    width: 100%;
+    z-index: 1001;
+    border-radius: 4px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 0.5rem;
+}
+
+.search-result-item {
+    padding: 0.75rem 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.search-result-item:hover {
+    background-color: #f0f0f0;
+}
+
+/* Accessibility Improvements */
+.search-result-item:focus,
+.search-result-item:active {
+    background-color: #e0e0e0;
+    outline: none;
+}
+
+</style>

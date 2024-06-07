@@ -1,0 +1,6 @@
+<form method="post" action="{% url 'add_to_Quotation' product.id %}?next={{ request.path }}">
+{% csrf_token %}
+<button type="submit" class="product__items--action__cart--btn primary__btn"  >
+    <span class="add__to--cart__text" > Get Quotation</span>
+</button>
+</form>

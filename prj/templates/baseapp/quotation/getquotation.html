@@ -1,0 +1,183 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block content %}
+    <main class="main__content_wrapper">
+        {% if banner %}
+        <section class="breadcrumb__section" style="background: url('{{ banner.image.url }}') no-repeat center center / cover; height: 300px; display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-align: center; -ms-flex-align: center; align-items: center; position: relative;">
+            <div class="container-fluid">
+                <div class="row row-cols-1">
+                    <div class="col">
+                        <div class="breadcrumb__content">
+                            <h1 class="breadcrumb__content--title text-white mb-10">Get Quotation</h1>
+                            <ul class="breadcrumb__content--menu d-flex">
+                                <li class="breadcrumb__content--menu__items"><a class="text-white"
+                                        href="index.html">Home</a></li>
+                                <li class="breadcrumb__content--menu__items"><span class="text-white">Get Quotation</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        {% else %}
+        
+        <!-- Start breadcrumb section -->
+        <section class="breadcrumb__section breadcrumb__bg2">
+         <div class="container">
+             <div class="row row-cols-1">
+                 <div class="col">
+                     <div class="breadcrumb__content">
+                         <h1 class="breadcrumb__content--title text-black mb-10">Get Quotation</h1>
+                         <ul class="breadcrumb__content--menu d-flex">
+                             <li class="breadcrumb__content--menu__items"><a class="text-black" href="index.html">Home</a></li>
+                             <li class="breadcrumb__content--menu__items"><span class="text-black">Get Quotation</span></li>
+                         </ul>
+                     </div>
+                 </div>
+             </div>
+         </div>
+     </section>
+{% endif %}
+
+<section class="cart__section section--padding">
+    <div class="container">
+        <div class="cart__section--inner">
+            <h2 class="cart__title mb-40">Shopping Cart</h2>
+            <div class="cart__table">
+                <table class="quotation__table--inner">
+                    <thead class="cart__table--header">
+                        <tr class="cart__table--header__items">
+                            <th class="cart__table--header__list">Product</th>
+                            <th class="cart__table--header__list">Quantity</th>
+                            <th class="cart__table--header__list">Price</th>
+                            <th class="cart__table--header__list text-right">Remove</th>
+                        </tr>
+                    </thead>
+                    <tbody class="cart__table--body">
+                        {% for item in quotation_items %}
+                        <tr class="cart__table--body__items" data-product-id="{{ item.product.id }}">
+                            <td class="cart__table--body__list">
+                                <div class="cart__product d-flex align-items-center">
+                                    <div class="cart__thumbnail">
+                                        <a href="{% url 'product_detail' item.product.id %}">
+                                            <img class="border-radius-5" src="{{ item.product.image.url }}" alt="{{ item.product.name }}">
+                                        </a>
+                                    </div>
+                                    <div class="cart__content">
+                                        <h4 class="cart__content--title">
+                                            <a href="{% url 'product_detail' item.product.id %}">{{ item.product.name }}</a>
+                                        </h4>
+                                    </div>
+                                </div>
+                            </td>
+
+                            <td class="cart__table--body__list">
+                               <div class="quantity__box">
+                                    <button type="button" class="quantity__value decrease" aria-label="quantity value" data-action="decrease">-</button>
+                                    <label>
+                                        <input type="number" class="quantity__number" value="{{ item.quantity }}" min="1" readonly />
+                                    </label>
+
+                                    <button type="button" class="quantity__value increase" aria-label="quantity value" data-action="increase">+</button>
+                                </div>
+                            </td>
+                            <td class="cart__table--body__list">
+                                <span class="quotation__price" data-price="{{ item.product.new_price }}">Rs. {{ item.total_price }}</span>
+                            </td>
+                            <td class="quotation__table--body__list text-right">
+                                <form action="{% url 'remove_from_quotation' item.product.id %}" method="post">
+                                    {% csrf_token %}
+                                    <button type="submit" class="cart__remove--btn" aria-label="remove item" >
+                                        <svg fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16px" height="16px">
+                                            <path d="M 4.7070312 3.2929688 L 3.2929688 4.7070312 L 10.585938 12 L 3.2929688 19.292969 L 4.7070312 20.707031 L 12 13.414062 L 19.292969 20.707031 L 20.707031 19.292969 L 13.414062 12 L 20.707031 4.7070312 L 19.292969 3.2929688 L 12 10.585938 L 4.7070312 3.2929688 z"/>
+                                        </svg>
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <div class="continue__shopping d-flex justify-content-between">
+                    <a class="continue__shopping--clear" href="{% url 'add_all_to_cart' %}?next={{ request.path }}">
+                        <button class="continue__shopping--clear" type="button">Add to Cart</button>
+                    </a>
+                    <div style='margin-right: 600px;color:#f51c1c; border: none;'>
+                        Total price: <button class="total-price btn btn-primary" style='border-style: none; background-color: transparent;color:black;'>Rs. {{ total_price }}</button>
+                        <form method="post" action="{% url 'get_mail' %}?next={{ request.path }}">
+                            {% csrf_token %}
+                            <button type="submit" class="get-mail-btn btn btn-primary">Get Quotation</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script>
+    // Update quotation item quantity
+    const quantityBtns = document.querySelectorAll('.quantity__value');
+    quantityBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const action = btn.dataset.action;
+            const productId = btn.closest('.cart__table--body__items').dataset.productId;
+            const quantityInput = btn.parentNode.querySelector('.quantity__number');
+            let quantity = parseInt(quantityInput.value, 10);
+
+            if (action === 'decrease' && quantity > 1) {
+                quantity--;
+            } else if (action === 'increase') {
+                quantity++;
+            }
+
+            updateQuotationItemQuantity(productId, quantity);
+        });
+    });
+
+    function updateQuotationItemQuantity(productId, quantity) {
+        const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+        const url = "{% url 'update_Quotation_item_quantity' %}";
+
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrftoken
+            },
+            body: JSON.stringify({ product_id: productId, quantity: quantity })
+        })
+        .then(response => response.json())
+        .then(data => {
+            const quotationItemRow = document.querySelector(`.cart__table--body__items[data-product-id="${productId}"]`);
+            const quantityInput = quotationItemRow.querySelector('.quantity__number');
+            const totalPriceElement = quotationItemRow.querySelector('.quotation__price');
+
+            quantityInput.value = data.quantity;
+            totalPriceElement.textContent = `Rs. ${data.total_price}`;
+            updateTotalPrice();
+        })
+        .catch(error => console.error('Error:', error));
+    }
+
+    // Update total price
+    function updateTotalPrice() {
+        const totalPriceElements = document.querySelectorAll('.quotation__price');
+        const totalPriceBtn = document.querySelector('.total-price');
+        let totalPrice = 0;
+
+        totalPriceElements.forEach(element => {
+            const price = parseFloat(element.dataset.price);
+            const quantity = parseInt(element.closest('.cart__table--body__items').querySelector('.quantity__number').value, 10);
+            totalPrice += price * quantity;
+        });
+
+        totalPriceBtn.textContent = `Rs. ${totalPrice.toFixed(2)}`;
+    }
+
+    // Update total price on page load
+    updateTotalPrice();
+</script>
+    </main>
+{% endblock %}

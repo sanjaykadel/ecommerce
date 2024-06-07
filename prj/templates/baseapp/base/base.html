@@ -1,0 +1,17 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+{% include 'base/head.html' %}
+<body>
+    {% include 'base/header.html' %}
+    {% block content %}
+    {% endblock %}
+       
+    {% include 'base/footer.html' %}
+    <script src="assets/js/plugins/swiper-bundle.min.js" defer="defer"></script>
+    <script src="assets/js/plugins/glightbox.min.js" defer="defer"></script>
+    <script src="{% static 'baseapp/js/custom.js' %}" defer="defer"></script>
+    <script src="{% static 'baseapp/js/script.js' %}" defer="defer"></script>
+
+</body>
+</html>

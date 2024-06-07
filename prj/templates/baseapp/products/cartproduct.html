@@ -1,0 +1,66 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="cart__section section--padding">
+    <div class="container">
+        <div class="cart__section--inner">
+            <h2 class="cart__title mb-40">Shopping Cart</h2>
+            <div class="cart__table">
+                <table class="quotation__table--inner">
+                    <thead class="cart__table--header">
+                        <tr class="cart__table--header__items">
+                            <th class="cart__table--header__list">Product</th>
+                            <th class="cart__table--header__list">Quantity</th>
+                            <th class="cart__table--header__list">Price</th>
+                            <th class="cart__table--header__list text-right">Remove</th>
+                        </tr>
+                    </thead>
+                    <tbody class="cart__table--body">
+                        {% for item in quotation_items %}
+                        <tr class="cart__table--body__items" data-product-id="{{ item.product.id }}">
+                            <td class="cart__table--body__list">
+                                <div class="cart__product d-flex align-items-center">
+                                    <div class="cart__thumbnail">
+                                        <a href="{% url 'product_detail' item.product.id %}">
+                                            <img class="border-radius-5" src="{{ item.product.image.url }}" alt="{{ item.product.name }}">
+                                        </a>
+                                    </div>
+                                    <div class="cart__content">
+                                        <h4 class="cart__content--title">
+                                            <a href="{% url 'product_detail' item.product.id %}">{{ item.product.name }}</a>
+                                        </h4>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="cart__table--body__list">
+                                {{ item.quantity }}
+                            </td>
+                            <td class="cart__table--body__list">
+                                <span class="quotation__price" data-price="{{ item.product.new_price }}">Rs. {{ item.total_price }}</span>
+                            </td>
+                            <td class="quotation__table--body__list text-right">
+                                <form action="{% url 'remove_from_Quotation' item.product.id %}" method="post">
+                                    {% csrf_token %}
+                                    <button type="submit" class="cart__remove--btn" aria-label="remove item">
+                                        <svg fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16px" height="16px">
+                                            <path d="M 4.7070312 3.2929688 L 3.2929688 4.7070312 L 10.585938 12 L 3.2929688 19.292969 L 4.7070312 20.707031 L 12 13.414062 L 19.292969 20.707031 L 20.707031 19.292969 L 13.414062 12 L 20.707031 4.7070312 L 19.292969 3.2929688 L 12 10.585938 L 4.7070312 3.2929688 z"/>
+                                        </svg>
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <div class="continue__shopping d-flex justify-content-between">
+                    <a class="continue__shopping--clear" href="{% url 'add_all_to_cart' %}?next={{ request.path }}">
+                        <button class="continue__shopping--clear" type="button">Add to Cart</button>
+                    </a>
+                    <div style='margin-right: 250px;color:#f51c1c; border: none;'>Total price: <button class="total-price btn btn-primary" style='border-style: none; background-color: transparent;color:black;'>Rs. {{ total_price }}</button></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

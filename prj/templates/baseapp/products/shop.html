@@ -1,0 +1,30 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{%block content %}
+
+    <main class="main__content_wrapper">
+        <!-- Start breadcrumb section -->
+        {% if banner %}
+        <section class="breadcrumb__section" style="background: url('{{ banner.image.url }}') no-repeat center center / cover; height: 300px; display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-align: center; -ms-flex-align: center; align-items: center; position: relative;">
+            <div class="container-fluid">
+                <div class="row row-cols-1">
+                    <div class="col">
+                        <div class="breadcrumb__content">
+                            <h1 class="breadcrumb__content--title text-white mb-10">Chairs</h1>
+                            <ul class="breadcrumb__content--menu d-flex">
+                                <li class="breadcrumb__content--menu__items"><a class="text-white"
+                                        href="index.html">Home</a></li>
+                                <li class="breadcrumb__content--menu__items"><span class="text-white">All Chairs</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        {% endif %}
+        {% include 'products/shopcontent.html' %}
+    </main>
+
+{% endblock %}
+    <!-- Quickview Wrapper -->

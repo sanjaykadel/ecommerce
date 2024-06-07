@@ -1,0 +1,95 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{%block content %}
+    <main class="main__content_wrapper">
+
+        <!-- Start breadcrumb section -->
+        <section class="breadcrumb__section breadcrumb__bg">
+            <div class="container">
+                <div class="row row-cols-1">
+                    <div class="col">
+                        <div class="breadcrumb__content">
+                            <h1 class="breadcrumb__content--title text-white mb-10">My Account</h1>
+                            <ul class="breadcrumb__content--menu d-flex">
+                                <li class="breadcrumb__content--menu__items"><a class="text-white" href="{% url 'index'%}">Home</a></li>
+                                <li class="breadcrumb__content--menu__items"><span class="text-white">My Account</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- End breadcrumb section -->
+        
+        <!-- my account section start -->
+        <section class="my__account--section section--padding">
+            <div class="container">
+                <div class="my__account--section__inner border-radius-10 d-flex">
+                    <div class="account__left--sidebar">
+                        <h3 class="account__content--title mb-20">My Profile</h3>
+                        <ul class="account__menu">
+                            <li class="account__menu--list "><a href="{% url 'myaccount'%}">Dashboard</a></li>
+                            <li class="account__menu--list active"><a href="{% url 'address'%}">Addresses</a></li>
+                            <li class="account__menu--list"><a href="{% url 'wishlist'%}">Wishlist</a></li>
+                            <li class="account__menu--list"><a href="login.html">Log Out</a></li>
+                        </ul>
+                    </div>
+                    <!-- myaddress.html -->
+                   <div class="account__wrapper">
+                        <div class="account__wrapper">
+                            <div class="account__content">
+                                <h3 class="account__content--title mb-20">Addresses</h3>
+                                <button id="add-address-btn" class="new__address--btn primary__btn mb-25" type="button">Add Address</button>
+                                <form id="add-address-form" method="POST" style="display: none;">
+                                   <button id="close-form-btn" style="top: 10px; right: 10px; width: 30px; height: 30px; border: none; background-color: transparent; color: black; font-size: 24px; cursor: pointer;" type="button">X</button>
+
+
+                                    {% csrf_token %} 
+                                    {{ form.as_p }}
+                                    <button type="submit" class="new__address--btn primary__btn mb-25" >Save Address</button>
+                                </form>
+                                {% for address in addresses %}
+                                    <div class="account__details two">
+                                        {% if address.is_default %}
+                                            <h4 class="account__details--title">Default</h4>
+                                        {% endif %}
+                                        <hr/>
+                                        <ul >
+                                            <li>{{ address.street }}, {{ address.city }}, {{ address.state }} {{ address.zip }}</li>
+                                        </ul>
+                                       
+                                    </div>
+                                    <div class="account__details--footer d-flex">
+                                        <a href="{% url 'edit_address' address.id %}" class="account__details--footer__btn">Edit</a>
+                                        <form action="{% url 'delete_address' %}" method="post">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="address_id" value="{{ address.id }}">
+                                            <button type="submit" class="account__details--footer__btn">Delete</button>
+                                        </form>
+                                    </div>
+                                {% endfor %}
+                                 <a class="account__details--link" href="myaddress.html">View Addresses ({{ addresses|length }})</a>
+                            </div>
+                        </div>
+
+                        <script>
+                            document.getElementById('add-address-btn').addEventListener('click', function() {
+                                document.getElementById('add-address-form').style.display = 'block';
+                            });
+                            
+                            document.getElementById('close-form-btn').addEventListener('click', function() {
+                                document.getElementById('add-address-form').style.display = 'none';
+                            });
+                        </script>
+                        </div>
+                    </div>
+                </div>
+            </section>
+                </div>
+            </div>
+        </section>
+        <!-- my account section end -->
+
+    </main>
+
+{% endblock %}
